@@ -13,73 +13,82 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center">List of vehicles</h1>
-        <div class="alert alert-primary text-center" role="alert">
-            - Showing @(Model != null ? Model.Count() : 0) vehicles - 
-        </div>
-        <div class="accordion" id="accordionExample">
-            <div class="card" style="border: 1px solid rgba(0,0,0,.125)">
-                <div class="card-header text-center" id="headingThree">
-                    <h2 class="mb-0">
-                        <a class="btn btn-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            + Create new vehicle
-                        </a>
-                    </h2>
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">List of vehicles</h1>
+                <div class="alert alert-primary text-center" role="alert">
+                    - Showing <span class="vehicle-count">@(Model != null ? Model.Count() : 0)</span> vehicles -
                 </div>
-                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                    <div class="card-body">
-                        <form asp-action="create" asp-controller="vehicle" method="post">
-                            <div class="form-group">
-                                <label for="make">Make</label>
-                                <input type="text" class="form-control" id="make" name="make" placeholder="Enter make">
+                <div class="accordion" id="accordionExample">
+                    <div class="card" style="border: 1px solid rgba(0,0,0,.125)">
+                        <div class="card-header text-center" id="headingThree">
+                            <h2 class="mb-0">
+                                <a class="btn btn-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    + Create new vehicle
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <form asp-action="create" asp-controller="vehicle" method="post">
+                                    <div class="form-group">
+                                        <label for="make">Make</label>
+                                        <input type="text" class="form-control" id="make" name="make" placeholder="Enter make">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="model">Model</label>
+                                        <input type="text" class="form-control" id="model" name="model" placeholder="Enter model">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="licenseNumber">License number</label>
+                                        <input type="text" class="form-control" id="licenseNumber" name="licenseNumber" placeholder="Enter license number">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </form>
                             </div>
-                            <div class="form-group">
-                                <label for="model">Model</label>
-                                <input type="text" class="form-control" id="model" name="model" placeholder="Enter model">
-                            </div>
-                            <div class="form-group">
-                                <label for="licenseNumber">License number</label>
-                                <input type="text" class="form-control" id="licenseNumber" name="licenseNumber" placeholder="Enter license number">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Create</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
+                <br />
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Make</th>
+                            <th scope="col">Model</th>
+                            <th scope="col">License number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th>@item.Id</th>
+                                    <td>@item.Make</td>
+                                    <td>@item.Model</td>
+                                    <td>@item.LicenseNumber</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    <strong>The model is null</strong>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
-        <br />
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Make</th>
-                    <th scope="col">Model</th>
-                    <th scope="col">License number</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null)
-                {
-                    foreach (var item in Model)
-                    {
-                        <tr>
-                            <th>@item.Id</th>
-                            <td>@item.Make</td>
-                            <td>@item.Model</td>
-                            <td>@item.LicenseNumber</td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="4" class="text-center">
-                            <strong>The model is null</strong>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="btn btn-info" role="button" asp-controller="vehicle" asp-action="index" asp-route-take="@(Model.Count() + 10)">Show 10 more vehicles</a>
+            </div>
+        </div>
     </div>
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>

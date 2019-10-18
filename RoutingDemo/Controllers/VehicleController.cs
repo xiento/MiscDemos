@@ -13,9 +13,9 @@ namespace RoutingDemo.Controllers
         {
             this.repo = repo;
         }
-        public IActionResult Index()
+        public IActionResult Index(int take = 10)
         {
-            var vehicles = repo.GetAll();
+            var vehicles = repo.GetAll().Take(take);
             return View(vehicles);
         }
 

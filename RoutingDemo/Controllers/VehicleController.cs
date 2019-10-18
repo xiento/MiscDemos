@@ -13,10 +13,12 @@ namespace RoutingDemo.Controllers
         {
             this.repo = repo;
         }
-        public IActionResult Index()
+        public IActionResult Index(int take = 10, int skip = 0)
         {
-            var vehicles = repo.GetAll();
-            return View(vehicles);
+            var vehicles = repo.GetAll().Skip(skip).Take(take);
+            if (HttpContext.Request.Method == "GET")
+                return View(vehicles);
+            return Json(vehicles);
         }
 
         public async Task<IActionResult> Create(Vehicle v)

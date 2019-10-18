@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<RoutingDemo.Models.Vehicle>
 @{
     Layout = null;
+    var haveLoadedMore = !string.IsNullOrEmpty(ViewContext.HttpContext.Request.Query["take"].ToString());
 }
 
 <!DOCTYPE html>
@@ -11,13 +12,13 @@
     <title>Vehicle list - WU18 Demo</title>
     <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 </head>
-<body>
+<body data-have-loaded-more="@haveLoadedMore">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h1 class="text-center">List of vehicles</h1>
                 <div class="alert alert-primary text-center" role="alert">
-                    - Showing <span class="vehicle-count">@(Model != null ? Model.Count() : 0)</span> vehicles -
+                    - Showing <span class="vehicle-count">@(Model != null ? Model.Count() : 0)</span> vehicles - @haveLoadedMore
                 </div>
                 <div class="accordion" id="accordionExample">
                     <div class="card" style="border: 1px solid rgba(0,0,0,.125)">
@@ -89,8 +90,17 @@
                 <a class="btn btn-info" role="button" asp-controller="vehicle" asp-action="index" asp-route-take="@(Model.Count() + 10)">Show 10 more vehicles</a>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <hr />
+                <small>WU18 Demos - @DateTime.Now.Year</small>
+                <br />
+                -
+            </div>
+        </div>
     </div>
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/js/vehiclelist.js"></script>
 </body>
 </html>

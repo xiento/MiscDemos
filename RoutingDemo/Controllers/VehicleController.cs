@@ -15,14 +15,8 @@ namespace RoutingDemo.Controllers
         }
         public IActionResult Index()
         {
-            var vehicles = repo.GetAll().Take(10);
+            var vehicles = repo.GetAll();
             return View(vehicles);
-        }
-
-        public IActionResult LoadMore(int skip)
-        {
-            var vehicles = repo.GetAll().Skip(skip);
-            return Json(vehicles);
         }
 
         public async Task<IActionResult> Create(Vehicle v)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,12 @@ namespace RoutingDemo.Models
     {
         private readonly ApplicationDbContext context;
         private readonly IMemoryCache cache;
-        public VehicleRepository(ApplicationDbContext ctx, IMemoryCache c)
+        private readonly IConfiguration config;
+        public VehicleRepository(ApplicationDbContext ctx, IMemoryCache c, IConfiguration configuration)
         {
             context = ctx;
             cache = c;
-
+            config = configuration;
         }
 
         public IEnumerable<Vehicle> GetAll()
@@ -31,14 +33,17 @@ namespace RoutingDemo.Models
                 //Didn't find a key with value "_CachedVehicles" in cache. 
                 //Get vehicles from db and order it by Id, highest first.
 
-                //Simulate heavy/time consuming operation
-                Thread.Sleep(4000);
+                //Simulate heavy/time consuming operation if set to true in appsettings
+                bool simulateHeavyOperation = config.GetSection("Settings").GetValue<bool>("SimulateTimeConsumingDbOperation");
+                if (simulateHeavyOperation)
+                    Thread.Sleep(4000);
 
                 vehicles = context.Vehicles.OrderByDescending(x => x.Id).ToList();
 
                 //Set cache options based on how we want it to be caches
                 var options = new MemoryCacheEntryOptions();
-                options.SetSlidingExpiration(TimeSpan.FromSeconds(20));
+                var seconds = config.GetSection("Settings").GetValue<int>("CacheSlidingExpirationInSeconds");
+                options.SetSlidingExpiration(TimeSpan.FromSeconds(seconds));
 
                 //Place the list of vehicles in cache with cache key "_CachedVehicles"
                 //Sliding expiration of 10 seconds

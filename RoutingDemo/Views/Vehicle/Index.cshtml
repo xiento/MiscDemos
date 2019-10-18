@@ -8,12 +8,15 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Vehicle list</title>
+    <title>Vehicle list - WU18 Demo</title>
     <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
         <h1 class="text-center">List of vehicles</h1>
+        <div class="alert alert-primary text-center" role="alert">
+            - Showing @(Model != null ? Model.Count() : 0) vehicles - 
+        </div>
         <div class="accordion" id="accordionExample">
             <div class="card" style="border: 1px solid rgba(0,0,0,.125)">
                 <div class="card-header text-center" id="headingThree">

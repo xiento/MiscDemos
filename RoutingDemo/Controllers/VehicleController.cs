@@ -28,5 +28,12 @@ namespace RoutingDemo.Controllers
             }
             return View(nameof(Index), null);
         }
+
+        public IActionResult Search(SearchViewModel vm)
+        {
+            var results = repo.Search(vm);
+            vm.Results = results;
+            return View(vm);
+        }
     }
 }

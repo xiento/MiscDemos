@@ -70,5 +70,18 @@ namespace RoutingDemo.Models
                 throw ex;
             }
         }
+
+        public IEnumerable<Vehicle> Search(SearchViewModel vm)
+        {
+            var results = GetAll();
+            if (!string.IsNullOrEmpty(vm.Make))
+                results = results.Where(x => x.Make.Contains(vm.Make, StringComparison.InvariantCultureIgnoreCase));
+            if(!string.IsNullOrEmpty(vm.Model))
+                results = results.Where(x => x.Model.Contains(vm.Model, StringComparison.InvariantCultureIgnoreCase));
+            if(!string.IsNullOrEmpty(vm.LicenseNumber))
+                results = results.Where(x => x.LicenseNumber.Contains(vm.LicenseNumber, StringComparison.InvariantCultureIgnoreCase));
+
+            return results;
+        }
     }
 }

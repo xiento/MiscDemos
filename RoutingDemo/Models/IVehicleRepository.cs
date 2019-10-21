@@ -9,5 +9,6 @@ namespace RoutingDemo.Models
     {
         IEnumerable<Vehicle> GetAll();
         Task<Vehicle> Create(Vehicle v);
+        IEnumerable<Vehicle> Search(SearchViewModel vm);
     }
 }

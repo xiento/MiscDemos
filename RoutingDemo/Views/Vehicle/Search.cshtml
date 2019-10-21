@@ -1,0 +1,42 @@
+﻿@model SearchViewModel
+
+<h1 class="text-center">Search result</h1>
+<div class="alert alert-primary text-center" role="alert">
+    - Showing @(Model != null ? Model.Results?.Count() : 0) vehicles -
+</div>
+<div class="card-body">
+    <partial name="SearchForm" model="Model" />
+</div>
+<br />
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Make</th>
+            <th scope="col">Model</th>
+            <th scope="col">License number</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model.Results)
+            {
+                <tr>
+                    <th>@item.Id</th>
+                    <td>@item.Make</td>
+                    <td>@item.Model</td>
+                    <td>@item.LicenseNumber</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center">
+                    <strong>The model is null</strong>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

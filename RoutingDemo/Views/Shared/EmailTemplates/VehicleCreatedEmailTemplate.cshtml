@@ -1,0 +1,43 @@
+﻿@model Vehicle
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>This is the email html template</title>
+    @*Linking external css files won't work in 9 out of 10 cases*@
+    <style>
+        body {
+            background-color: lightblue;
+        }
+
+        h1 {
+            color: green;
+        }
+
+        p {
+            color: brown;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Hello from the email template</h1>
+                <p>
+                    <strong>Created vehicle info:</strong><br />
+                    Make: @Model.Make<br />
+                    Model: @Model.Model<br />
+                    License number: @Model.LicenseNumber
+                </p>
+                <img src="https://www.autoblog.com/img/research/styles/photos/electric.jpg" alt="A Tesla" />
+            </div>
+        </div>
+    </div>
+</body>
+</html>

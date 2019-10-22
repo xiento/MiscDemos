@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RoutingDemo.Infrastructure;
 using RoutingDemo.Models;
 
 namespace RoutingDemo
@@ -29,13 +24,15 @@ namespace RoutingDemo
 
             services.AddTransient<IVehicleRepository, VehicleRepository>();
 
+            services.AddTransient<IRazorViewToHtmlHelper, RazorViewToHtmlHelper>();
+
             services.AddMvc().AddXmlDataContractSerializerFormatters().AddMvcOptions(options =>
             {
                 options.FormatterMappings.SetMediaTypeMappingForFormat("xml", "application/xml");
                 //options.RespectBrowserAcceptHeader = true;
                 //options.ReturnHttpNotAcceptable = true;
             });
-            
+
             services.AddSession();
 
         }

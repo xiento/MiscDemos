@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RoutingDemo.Models;
+using System.Collections.Generic;
 
 namespace RoutingDemo.Controllers
 {

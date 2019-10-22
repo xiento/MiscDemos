@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Person>
+@{
+    Layout = null;
+    var baseUrl = $"{ViewContext.HttpContext.Request.Scheme}://{ViewContext.HttpContext.Request.Host.Value}";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>WU18 Demos - Persons</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        @foreach (Person person in Model)
+        {
+            var path = Url.Action("details", "persons", new
+            {
+                firstName = person.FirstName,
+                lastName = person.LastName,
+                id = person.Id
+            });
+            <li>
+                <a asp-controller="persons" asp-action="details" asp-route-firstname="@person.FirstName" asp-route-lastname="@person.LastName" asp-route-id="@person.Id">
+                    @person.FirstName @person.LastName
+                </a>
+                <strong>
+                    @($"{baseUrl}{path}")
+                </strong>
+            </li>
+        }
+    </ul>
+</body>
+</html>

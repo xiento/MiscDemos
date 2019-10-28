@@ -60,7 +60,7 @@ namespace RoutingDemo
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=vehicle}/{action=index}"
+                    template: "{controller=services}/{action=index}"
                     );
             });
         }

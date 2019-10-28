@@ -1,0 +1,92 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Services</title>
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .service:hover {
+            cursor: pointer;
+        }
+
+        .selected {
+            border: solid 2px green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-center">Please select one or more services that you need help with</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card service" style="width: 18rem;">
+                    <img src="https://www.fillmurray.com/200/200" class="card-img-top" alt="The alt tag">
+                    <div class="card-body">
+                        <h3>Service 1</h3>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card service" style="width: 18rem;">
+                    <img src="https://www.fillmurray.com/200/200" class="card-img-top" alt="The alt tag">
+                    <div class="card-body">
+                        <h3>Service 2</h3>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card service" style="width: 18rem;">
+                    <img src="https://www.fillmurray.com/200/200" class="card-img-top" alt="The alt tag">
+                    <div class="card-body">
+                        <h3>Service 3</h3>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <hr />
+                <button class="btn btn-success send">Send request</button>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.service').click(function () {
+                $(this).toggleClass('selected');
+            });
+
+            $('button.send').click(function (e) {
+                e.preventDefault();
+                var selectedServices = [];
+                $('.selected').each(function () {
+                    var service = $(this).find('h3').text();
+                    selectedServices.push(service);
+                });
+
+                $.post('/services/send', { services: selectedServices }).then(function (d) {
+                    console.log(d);
+                }).fail(function (error) {
+                    console.log(error);
+                });
+
+            });
+        });
+    </script>
+</body>
+</html>

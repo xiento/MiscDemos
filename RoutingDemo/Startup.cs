@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,9 +20,17 @@ namespace RoutingDemo
 
             var conn = config.GetConnectionString("VehiclesConnectionString");
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(conn));
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                //change true to false to disable lazy loading
+                options.UseLazyLoadingProxies(true);
+                options.UseSqlServer(conn);
+            });
+
+            services.AddAutoMapper(typeof(Profiles));
 
             services.AddTransient<IVehicleRepository, VehicleRepository>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddMvc().AddXmlDataContractSerializerFormatters().AddMvcOptions(options =>
             {
@@ -35,7 +38,7 @@ namespace RoutingDemo
                 //options.RespectBrowserAcceptHeader = true;
                 //options.ReturnHttpNotAcceptable = true;
             });
-            
+
             services.AddSession();
 
         }
@@ -60,7 +63,7 @@ namespace RoutingDemo
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=vehicle}/{action=index}"
+                    template: "{controller=category}/{action=index}"
                     );
             });
         }

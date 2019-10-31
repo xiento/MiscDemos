@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RoutingDemo.Models;
 
 namespace RoutingDemo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191031100625_category2")]
+    partial class category2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,22 +35,6 @@ namespace RoutingDemo.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("RoutingDemo.Models.Product", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("CategoryId");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("RoutingDemo.Models.Vehicle", b =>
@@ -76,14 +62,6 @@ namespace RoutingDemo.Migrations
                     b.HasOne("RoutingDemo.Models.Category")
                         .WithMany("Categories")
                         .HasForeignKey("CategoryId");
-                });
-
-            modelBuilder.Entity("RoutingDemo.Models.Product", b =>
-                {
-                    b.HasOne("RoutingDemo.Models.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

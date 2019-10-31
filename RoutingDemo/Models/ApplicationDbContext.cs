@@ -17,14 +17,15 @@ namespace RoutingDemo.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            IEnumerable<Vehicle> seedVehicles = GetSeedData();
-            modelBuilder.Entity<Vehicle>().HasData(seedVehicles);
+            
+            //IEnumerable<Vehicle> seedVehicles = GetSeedData();
+            //modelBuilder.Entity<Vehicle>().HasData(seedVehicles);
         }
 
         private IEnumerable<Vehicle> GetSeedData()
         {
             var list = new List<Vehicle>();
-            for (int i = 1; i < 1000; i++)
+            for (int i = 1; i < 20; i++)
             {
                 var make = GetRandomMake();
                 var model = GetRandomModel();
@@ -64,9 +65,11 @@ namespace RoutingDemo.Models
             return _makes[num];
         }
 
-        private List<string> _makes => new List<string> {"Volvo", "Saab", "Opel", "Volkswagen", "Mazda", "BMW", "Lexus", "Kia", "Ford"};
+        private List<string> _makes => new List<string> { "Volvo", "Saab", "Opel", "Volkswagen", "Mazda", "BMW", "Lexus", "Kia", "Ford" };
         private List<string> _models => new List<string> { "XC90", "V90", "XC60", "C30", "740", "900", "9000", "9-3", "Ascona", "Kadett", "Passat", "Golf", "Polo", "Up", "Touareg", "M5", "M3", "i8", "Ceed", "Rio", "Focus", "Mondeo", "Egde", "Fiesta" };
-        
+
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }
